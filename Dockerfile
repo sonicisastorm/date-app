@@ -1,17 +1,16 @@
 FROM python:3.9-slim
 
-# Set working directory
 WORKDIR /app
 
 # Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy app code
+# Copy application
 COPY app.py .
 
-# Expose Flask port
-EXPOSE 5000
+# Expose port 80
+EXPOSE 80
 
-# Run the app
-CMD ["python", "app.py"]
+# Run app
+ENTRYPOINT ["python", "app.py"]

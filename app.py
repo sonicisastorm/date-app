@@ -1,14 +1,18 @@
 from flask import Flask
 from datetime import datetime
+import pytz
 
 app = Flask(__name__)
 
-@app.route("/date")
-def get_date():
-    now = datetime.now().strftime("%H:%M:%S")
-    seconds = int(datetime.now().strftime("%S"))
-    status = "EVEN" if seconds % 2 == 0 else "ODD"
-    return f"{now} {status}"
+TIMEZONE = pytz.timezone('Asia/Baku')
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+@app.route('/date')
+def date():
+    now = datetime.now(TIMEZONE)
+    current_time = now.strftime("%H:%M:%S")
+    seconds = now.second
+    parity = "EVEN" if seconds % 2 == 0 else "ODD"
+    return f"{current_time} {parity}"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)
